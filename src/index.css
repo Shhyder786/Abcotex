@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700;900&family=Work+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #2563EB;
+  --color-primary-container: #1D4ED8;
+  --color-on-primary-container: #ffffff;
+  --color-secondary: #8B5CF6;
+  --color-secondary-fixed: #EDE9FE;
+  --color-on-secondary-fixed: #6D28D9;
+  --color-tertiary: #EC4899;
+  --color-neutral: #F1F5F9;
+  --color-surface-container: #ffffff;
+  --color-surface-container-low: #f8fafc;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-high: #e2e8f0;
+  --color-surface-container-highest: #cbd5e1;
+  --color-outline: #64748B;
+  --color-outline-variant: #e2e8f0;
+  --color-on-surface: #0f172a;
+  --color-on-surface-variant: #475569;
+  --color-background: #f1f5f9;
+  --color-on-background: #0f172a;
+
+  --font-sans: "Work Sans", "Inter", sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --font-headline: "Hanken Grotesk", "Inter", sans-serif;
+
+  /* Custom Spacing scale for layout consistency */
+  --spacing-gutter: 1.5rem;
+  --spacing-xs: 0.5rem;    /* 8px */
+  --spacing-sm: 0.75rem;   /* 12px */
+  --spacing-md: 1rem;      /* 16px */
+  --spacing-lg: 1.5rem;    /* 24px */
+  --spacing-xl: 3rem;      /* 48px */
+  --spacing-2xl: 4.5rem;   /* 72px */
+
+  /* Explicit max-width overrides to prevent spacing conflicts */
+  --max-width-sm: 24rem;
+  --max-width-md: 28rem;
+  --max-width-lg: 32rem;
+  --max-width-xl: 36rem;
+  --max-width-2xl: 42rem;
+  --max-width-3xl: 48rem;
+  --max-width-4xl: 56rem;
+  --max-width-7xl: 80rem;
+
+  /* Custom Typography Sizes */
+  --font-size-display: 3rem;
+  --font-size-headline-xl: 2.25rem;
+  --font-size-headline-lg: 1.75rem;
+  --font-size-headline-md: 1.25rem;
+  --font-size-label-md: 0.875rem;
+  --font-size-label-sm: 0.75rem;
+  --font-size-body-lg: 1.125rem;
+  --font-size-body-md: 1rem;
+  --font-size-body-sm: 0.875rem;
+
+  /* Custom Font Families */
+  --font-display: var(--font-headline);
+  --font-headline-xl: var(--font-headline);
+  --font-headline-lg: var(--font-headline);
+  --font-headline-md: var(--font-headline);
+  --font-label-md: var(--font-sans);
+  --font-label-sm: var(--font-sans);
+  --font-body-lg: var(--font-sans);
+  --font-body-md: var(--font-sans);
+  --font-body-sm: var(--font-sans);
+
+  --animate-fadeIn: fadeIn 0.4s ease-out forwards;
+  --animate-slideDown: slideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headline);
+    letter-spacing: -0.02em;
+  }
+}
