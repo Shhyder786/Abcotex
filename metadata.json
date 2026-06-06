@@ -2,5 +2,5 @@
   "name": "ABCOTEX",
   "description": "Next-Gen Chemical & Hygiene Solutions Tailored for Global Industries.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": []
 }
