@@ -27,8 +27,7 @@ import { ActiveTab, Product } from './types';
 import { PRODUCTS_DATA, INDUSTRY_VERTICALS, CASE_STUDIES, TRUSTED_CLIENTS } from './data';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import slider1 from './assets/slider 1.jpeg';
-import slider2 from './assets/slider 2.jpeg';
+import heroImage from './assets/hero.jpeg';
 import logoImg from './assets/logo.png';
 
 export default function App() {
@@ -44,49 +43,6 @@ export default function App() {
   const [selectedProductForForm, setSelectedProductForForm] = useState<string[]>([]);
   const [suggestedIndustry, setSuggestedIndustry] = useState<string>('Healthcare');
   const [expandedCaseStudy, setExpandedCaseStudy] = useState<string | null>(null);
-
-  // Slider states and autoplay
-  const [activeSlide, setActiveSlide] = useState(0);
-
-  const slides = [
-    {
-      image: slider1,
-      badge: "ESTABLISHED 1997 | 28 YEARS OF TRUST",
-      title: "Premium Chemical Auxiliaries for Textile Mills",
-      subtitle: "Formulating swelling agents, Fixnol polyamine fixers, and high-stability softeners optimized for industrial garment mills.",
-      primaryBtnText: "Explore Catalog",
-      secondaryBtnText: "Request Spec",
-      primaryAction: () => navigateToTab('products'),
-      secondaryAction: () => handleScrollToInquiry('Textile', [])
-    },
-    {
-      image: slider2,
-      badge: "CLINICAL GRADE DISINFECTION",
-      title: "PCSIR-certified Hospital & Clinic Sanitizers",
-      subtitle: "WHO standard hand hygiene systems and heavy-duty coal-tar phenolic floor disinfectants validated for infection control.",
-      primaryBtnText: "Browse Hygiene Care",
-      secondaryBtnText: "Direct Inquiry",
-      primaryAction: () => {
-        setCategoryFilter('healthcare');
-        navigateToTab('products');
-      },
-      secondaryAction: () => handleScrollToInquiry('Healthcare', [])
-    }
-  ];
-
-  const nextSlide = () => {
-    setActiveSlide((prev) => (prev + 1) % slides.length);
-  };
-
-  const prevSlide = () => {
-    setActiveSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
-
-  // Autoplay effect
-  useEffect(() => {
-    const timer = setInterval(nextSlide, 5000);
-    return () => clearInterval(timer);
-  }, []);
 
   // E-commerce style B2B Inquiry Bag states
   const [inquiryBag, setInquiryBag] = useState<string[]>([]);
@@ -281,92 +237,13 @@ export default function App() {
         {/* TAB 1: HOME (previously Solutions) */}
         {activeTab === 'home' && (
           <div className="animate-fadeIn">
-            {/* E-commerce Hero Image Slider */}
-            <section className="relative w-full h-[360px] sm:h-[480px] lg:h-[520px] overflow-hidden bg-slate-900">
-              {/* Slides */}
-              {slides.map((slide, index) => {
-                const isActive = index === activeSlide;
-                return (
-                  <div
-                    key={index}
-                    className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
-                      isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                    }`}
-                  >
-                    {/* Background image */}
-                    <img
-                      src={slide.image}
-                      alt={slide.title}
-                      className="w-full h-full object-cover select-none"
-                    />
-                    {/* Dark gradient overlay for text legibility */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-900/40 to-transparent" />
-                    
-                    {/* Content */}
-                    <div className="absolute inset-0 flex items-center">
-                      <div className="max-w-7xl mx-auto px-6 w-full text-left">
-                        <div className="max-w-xl space-y-4 sm:space-y-6">
-                          <span className="inline-block bg-gradient-to-r from-[#8b5cf6] to-[#0077e6] text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">
-                            {slide.badge}
-                          </span>
-                          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
-                            {slide.title}
-                          </h1>
-                          <p className="text-xs sm:text-sm text-slate-200 leading-relaxed max-w-lg">
-                            {slide.subtitle}
-                          </p>
-                          <div className="flex gap-3 pt-2">
-                            <button
-                              onClick={slide.primaryAction}
-                              className="bg-gradient-to-r from-[#8b5cf6] to-[#0077e6] hover:brightness-105 text-white px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-primary/20 hover:shadow-primary/30 cursor-pointer border-none"
-                            >
-                              {slide.primaryBtnText}
-                            </button>
-                            <button
-                              onClick={slide.secondaryAction}
-                              className="bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all border border-white/20 cursor-pointer"
-                            >
-                              {slide.secondaryBtnText}
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-
-              {/* Slider controls - Prev Button */}
-              <button
-                onClick={prevSlide}
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full transition-colors cursor-pointer border-none flex items-center justify-center"
-                aria-label="Previous Slide"
-              >
-                <ChevronRight className="w-5 h-5 rotate-180" />
-              </button>
-
-              {/* Slider controls - Next Button */}
-              <button
-                onClick={nextSlide}
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full transition-colors cursor-pointer border-none flex items-center justify-center"
-                aria-label="Next Slide"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-
-              {/* Indicators */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
-                {slides.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setActiveSlide(index)}
-                    className={`w-2 h-2 rounded-full transition-all ${
-                      index === activeSlide ? 'bg-primary w-4' : 'bg-white/40'
-                    } cursor-pointer border-none`}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
-              </div>
+            {/* Static Hero Image */}
+            <section className="w-full bg-slate-900">
+              <img
+                src={heroImage}
+                alt="ABCOTEX industrial chemical hero"
+                className="block w-full h-auto select-none"
+              />
             </section>
             
                         {/* Core Metrics Strip */}
