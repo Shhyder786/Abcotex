@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, X, ShoppingCart } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { ActiveTab } from '../types';
 
 interface HeaderProps {
@@ -9,13 +9,10 @@ interface HeaderProps {
   setMobileMenuOpen: (open: boolean) => void;
   navigateToTab: (tab: ActiveTab) => void;
   handleScrollToInquiry: (industry?: string, productIds?: string[]) => void;
-  inquiryCount: number;
-  onOpenInquiryBag: () => void;
 }
 
 const NAV_ITEMS: { tab: ActiveTab; label: string; id: string }[] = [
   { tab: 'home', label: 'Home', id: 'nav-home' },
-  { tab: 'products', label: 'Products', id: 'nav-products' },
   { tab: 'about-us', label: 'About Us', id: 'nav-about' },
 ];
 
@@ -26,8 +23,6 @@ export default function Header({
   setMobileMenuOpen,
   navigateToTab,
   handleScrollToInquiry,
-  inquiryCount,
-  onOpenInquiryBag,
 }: HeaderProps) {
   return (
     <header
@@ -69,23 +64,8 @@ export default function Header({
           ))}
         </nav>
 
-        {/* Contact & Inquiry Bag Buttons */}
+        {/* Contact Button */}
         <div className="flex items-center gap-3">
-          {/* Inquiry Bag Cart Button */}
-          <button
-            onClick={onOpenInquiryBag}
-            className="relative p-2.5 text-slate-700 hover:text-primary hover:bg-slate-50 rounded-xl transition-all cursor-pointer flex items-center justify-center border border-slate-200/60"
-            title="View Inquiry List"
-            id="header-inquiry-bag-btn"
-          >
-            <ShoppingCart className="w-[18px] h-[18px]" />
-            {inquiryCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-primary text-white text-[9px] font-bold w-4.5 h-4.5 rounded-full flex items-center justify-center shadow animate-pulse">
-                {inquiryCount}
-              </span>
-            )}
-          </button>
-
           <button
             onClick={() => handleScrollToInquiry('Healthcare', [])}
             className="hidden md:block bg-gradient-to-r from-[#8b5cf6] to-[#0077e6] hover:brightness-105 text-white px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-primary/20 hover:shadow-primary/30 cursor-pointer"
@@ -122,24 +102,6 @@ export default function Header({
               {item.label}
             </button>
           ))}
-          <button
-            onClick={() => {
-              onOpenInquiryBag();
-              setMobileMenuOpen(false);
-            }}
-            className="flex items-center justify-between p-3 text-sm font-semibold rounded-lg text-slate-755 hover:bg-slate-50 border border-slate-200/60"
-            id="mobile-inquiry-bag-btn"
-          >
-            <span className="flex items-center gap-2">
-              <ShoppingCart className="w-4 h-4 text-primary" />
-              Inquiry Bag
-            </span>
-            {inquiryCount > 0 && (
-              <span className="bg-gradient-to-r from-[#8b5cf6] to-[#0077e6] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-                {inquiryCount}
-              </span>
-            )}
-          </button>
           <button
             onClick={() => {
               handleScrollToInquiry('Healthcare', []);

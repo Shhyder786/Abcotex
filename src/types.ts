@@ -1,4 +1,4 @@
-export type ActiveTab = 'home' | 'products' | 'about-us';
+export type ActiveTab = 'home' | 'about-us';
 
 export interface Product {
   id: string;

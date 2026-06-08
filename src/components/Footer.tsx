@@ -41,7 +41,6 @@ export default function Footer({ navigateToTab, setCategoryFilter, handleScrollT
             <h4 className="text-sm font-bold text-slate-700">Quick Links</h4>
             <ul className="text-sm text-slate-600 space-y-2">
               <li><button onClick={() => navigateToTab('home')} className="hover:text-primary transition-colors">Home</button></li>
-              <li><button onClick={() => navigateToTab('products')} className="hover:text-primary transition-colors">Products</button></li>
               <li><button onClick={() => navigateToTab('about-us')} className="hover:text-primary transition-colors">About Us</button></li>
               <li><button onClick={() => handleScrollToInquiry(undefined, [])} className="hover:text-primary transition-colors">Request Spec / Inquiry</button></li>
             </ul>

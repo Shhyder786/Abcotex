@@ -227,8 +227,6 @@ export default function App() {
         setMobileMenuOpen={setMobileMenuOpen}
         navigateToTab={navigateToTab}
         handleScrollToInquiry={handleScrollToInquiry}
-        inquiryCount={inquiryBag.length}
-        onOpenInquiryBag={() => setInquiryBagOpen(true)}
       />
 
       {/* Main content body */}
@@ -272,23 +270,36 @@ export default function App() {
 
             {/* Featured products section removed */}
 
-            {/* Showcase Client Marquee Bar with static/carousel simulation */}
-            <section className="py-2xl border-y border-outline-variant/10 bg-surface-container-low overflow-hidden">
-              <div className="max-w-7xl mx-auto px-gutter mb-lg text-center animate-pulse">
-                <span className="text-[12px] font-bold text-slate-700 tracking-widest uppercase font-mono">
-                  TRUSTED BY INDUSTRY LEADERS IN EXPORT & DOMESTIC MARKETS
-                </span>
-              </div>
-              
-              <div className="flex gap-[100px] items-center whitespace-nowrap overflow-x-auto py-2 px-gutter no-scrollbar relative max-w-7xl mx-auto justify-around">
-                {TRUSTED_CLIENTS.map((client, idx) => (
-                  <span 
-                    key={idx} 
-                    className="text-headline-md font-extrabold text-slate-400/80 hover:text-primary transition-colors tracking-tight font-headline-lg font-sans text-sm md:text-md uppercase"
-                  >
-                    {client}
-                  </span>
-                ))}
+            {/* Trusted clients marquee */}
+            <section className="border-y border-outline-variant/15 bg-gradient-to-b from-surface-container-low via-white to-surface-container-low py-10 overflow-hidden">
+              <div className="max-w-7xl mx-auto px-gutter">
+                <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-6">
+                  <div className="space-y-2 text-left">
+                    <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.35em] font-bold text-primary">
+                      <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                      Trusted by Industry Leaders
+                    </span>
+                    <h2 className="text-xl sm:text-2xl font-extrabold text-on-surface">
+                      Export & Domestic Markets
+                    </h2>
+                  </div>
+                  <p className="text-xs sm:text-sm text-slate-500 max-w-lg md:text-right leading-relaxed">
+                    A continuous network of healthcare, textile, engineering, and retail partners that rely on ABCOTEX for consistent supply and performance.
+                  </p>
+                </div>
+
+                <div className="trusted-marquee-mask overflow-hidden">
+                  <div className="flex w-max gap-4 trusted-marquee-track py-2">
+                    {[...TRUSTED_CLIENTS, ...TRUSTED_CLIENTS].map((client, idx) => (
+                      <span
+                        key={`${client}-${idx}`}
+                        className="flex-none inline-flex items-center justify-center min-h-14 px-5 py-3 rounded-2xl bg-white border border-slate-200 shadow-[0_10px_25px_rgba(15,23,42,0.06)] text-slate-600 text-[11px] sm:text-xs md:text-sm font-extrabold uppercase tracking-wide whitespace-nowrap transition-transform duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_35px_rgba(37,99,235,0.12)] hover:text-primary"
+                      >
+                        {client}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
             </section>
 
@@ -323,10 +334,10 @@ export default function App() {
 
                     <div className="pt-4 mt-6 flex justify-between items-center border-t border-slate-100">
                       <button 
-                        onClick={() => navigateToTab('products')}
+                          onClick={() => handleScrollToInquiry(vertical.title, vertical.recommendedProductIds)}
                         className="text-primary font-bold text-xs uppercase tracking-wide hover:underline cursor-pointer flex items-center gap-1"
                       >
-                        Browse {vertical.recommendedProductIds.length} Products
+                          Quick Inquiry
                         <ChevronRight className="w-3.5 h-3.5" />
                       </button>
                       <button 
@@ -380,211 +391,6 @@ export default function App() {
                 </div>
               </div>
             </section>
-          </div>
-        )}
-
-        {/* TAB 2: PRODUCTS CATALOG MATCHING SCREEN 2 */}
-        {activeTab === 'products' && (
-          <div className="animate-fadeIn">
-            {/* Products hero and Browse By Division removed */}
-
-            {/* Catalog search/filter Controls */}
-            <section className="max-w-7xl mx-auto px-gutter mb-xl mt-8 md:mt-12">
-              <div className="bg-surface-container p-md rounded-xl border border-outline-variant/30 flex flex-col md:flex-row gap-4 md:gap-6 items-center justify-center">
-                
-                {/* Text search */}
-                <div className="relative w-full md:max-w-4xl">
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      // keep default behavior: filter handled reactively via input state
-                    }}
-                    className="w-full max-w-full flex items-center gap-3 bg-white rounded-2xl border border-slate-200 shadow-sm px-4 py-3 transition-shadow hover:shadow-md"
-                    role="search"
-                    aria-label="Product search"
-                  >
-                    <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-surface-container-lowest/60">
-                      <Search className="w-5 h-5 text-slate-400" />
-                    </div>
-
-                    <input
-                      type="text"
-                      value={productSearch}
-                      onChange={(e) => setProductSearch(e.target.value)}
-                      className="flex-1 bg-transparent border-none outline-none text-sm text-slate-700 placeholder-slate-400 px-4 py-2"
-                      placeholder="Search chemical specifications, e.g. Phenyl, Hydrogen Peroxide..."
-                      aria-label="Search products"
-                    />
-
-                    {productSearch ? (
-                      <button
-                        type="button"
-                        onClick={() => setProductSearch('')}
-                        title="Clear search"
-                        aria-label="Clear search"
-                        className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center"
-                      >
-                        <X className="w-4 h-4 text-slate-500" />
-                      </button>
-                    ) : null}
-
-                    <div className="relative ml-2">
-                      <label htmlFor="search-category" className="sr-only">Category</label>
-                      <select
-                        id="search-category"
-                        value={categoryFilter}
-                        onChange={(e) => setCategoryFilter(e.target.value as any)}
-                        className="appearance-none bg-slate-50 border border-slate-200 text-sm rounded-md px-3 py-2 pr-8"
-                      >
-                        <option value="all">All Divisions</option>
-                        <option value="textile">Textile Industry</option>
-                        <option value="healthcare">Healthcare & Hospitals</option>
-                        <option value="retail">Stores & Retail Chains</option>
-                        <option value="general">General Cleaning Chemicals</option>
-                      </select>
-                      <ChevronDown className="w-4 h-4 absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
-                    </div>
-
-                    <button
-                      type="submit"
-                      className="ml-3 inline-flex items-center gap-2 bg-gradient-to-r from-[#6d28d9] to-[#3b82f6] text-white px-4 py-2 rounded-lg text-sm font-semibold shadow-md hover:brightness-105"
-                      aria-label="Search"
-                    >
-                      <Search className="w-4 h-4" />
-                      Search
-                    </button>
-                  </form>
-                </div>
-
-                {/* Category buttons removed; category selection is available in the search dropdown */}
-              </div>
-            </section>            <div className="max-w-7xl mx-auto px-gutter space-y-2xl">
-              
-              {/* Dynamic Header & Unified Single Grid */}
-              <section className="scroll-mt-24">
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-md gap-sm border-b border-outline-variant/35 pb-sm">
-                  <div className="text-left">
-                    <h2 className="text-headline-lg font-headline-lg text-on-surface font-bold text-xl sm:text-2xl">{currentHeader.title}</h2>
-                    <p className="text-on-surface-variant leading-relaxed text-xs">{currentHeader.subtitle}</p>
-                  </div>
-                  {/* Removed small tag pill for cleaner layout */}
-                </div>
-
-                {displayProducts.length > 0 ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {displayProducts.map((p) => (
-                      <div 
-                        key={p.id}
-                        className="group bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden hover:scale-[1.01]"
-                      >
-                        {/* Top Image */}
-                        <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100 border-b border-slate-150">
-                          <img 
-                            src={p.imageUrl} 
-                            alt={p.name} 
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 select-none"
-                            loading="lazy"
-                          />
-                          <div className="absolute top-2.5 right-2.5">
-                            <span className="bg-primary/95 text-white text-[9px] px-2.5 py-0.5 rounded font-mono font-bold uppercase shadow-sm">
-                              {p.statusOrInventory}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Text and Details */}
-                        <div className="p-5 flex flex-col justify-between flex-1 text-left">
-                          <div className="space-y-2">
-                            <h3 className="font-extrabold text-sm text-slate-900 group-hover:text-primary transition-colors leading-snug">
-                              {p.name}
-                            </h3>
-                            <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">
-                              {p.description}
-                            </p>
-                          </div>
-
-                          <div className="mt-4 pt-3 border-t border-slate-100 space-y-1.5 text-[10px] text-slate-400">
-                            <div className="flex justify-between items-center gap-2">
-                              <span className="font-bold uppercase tracking-wider shrink-0">Specification:</span>
-                              <span className="font-semibold text-slate-650 truncate max-w-[130px]" title={p.specification}>{p.specification}</span>
-                            </div>
-                            <div className="flex justify-between items-center">
-                              <span className="font-bold uppercase tracking-wider">Dilution Ratio:</span>
-                              <span className="font-bold text-slate-700 font-mono">{p.dilutionRatio}</span>
-                            </div>
-                            <div className="flex gap-2 mt-3">
-                              <button
-                                onClick={() => toggleInquiryBag(p.id)}
-                                className={`flex-1 py-2 rounded-lg font-bold text-[10px] uppercase tracking-wider transition-colors cursor-pointer text-center flex items-center justify-center gap-1.5 border ${
-                                  inquiryBag.includes(p.id)
-                                    ? 'bg-primary text-white border-primary hover:bg-primary-container'
-                                    : 'bg-slate-50 text-slate-700 border-slate-200 hover:border-primary hover:bg-primary hover:text-white'
-                                }`}
-                              >
-                                <ShoppingCart className="w-3.5 h-3.5" />
-                                {inquiryBag.includes(p.id) ? 'In Bag' : 'Add to Inquiry'}
-                              </button>
-                              <button
-                                onClick={() => setSelectedProductDetails(p)}
-                                className="px-3 bg-slate-50 hover:bg-slate-150 text-slate-650 py-2 rounded-lg font-bold text-[10px] uppercase tracking-wider transition-colors border border-slate-200 cursor-pointer text-center"
-                                title="Quick View Specifications"
-                              >
-                                Details
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-8 bg-slate-50 border border-dashed border-slate-200 rounded-xl text-slate-500 font-mono text-xs">
-                    No chemical matches found in this division.
-                  </div>
-                )}
-              </section>
-
-              {/* Engineering Themed Custom Formulation Callout */}
-              <section className="bg-primary-container p-xl sm:p-2xl text-on-primary-container rounded-2xl flex flex-col md:flex-row gap-xl items-center relative overflow-hidden shadow-inner border border-primary/20">
-                {/* Abstract graphic watermark illustration of chemical beaker */}
-                <div className="absolute right-0 top-0 opacity-10 translate-x-12 -translate-y-12 select-none pointer-events-none">
-                  <FlaskConical className="w-[280px] h-[280px]" />
-                </div>
-                
-                <div className="flex-1 z-10 space-y-md text-left">
-                  <div className="flex items-center gap-xs">
-                    <Settings className="w-8 h-8 text-white animate-spin" style={{ animationDuration: '15s' }} />
-                    <h2 className="text-headline-lg font-headline-lg text-white font-extrabold text-xl sm:text-2xl">
-                      Custom Formulation & Custom Chemical Synthesis
-                    </h2>
-                  </div>
-                  <p className="text-body-md text-white/95 leading-relaxed max-w-3xl font-medium">
-                    Our R&D division has spent nearly three decades designing customized chemical structures for specific industrial requirements. Talk to our technical team today.
-                  </p>
-                  <div className="flex flex-wrap gap-xs sm:gap-sm pt-2">
-                    <span className="bg-white/10 px-md py-1 rounded text-[11px] font-bold uppercase tracking-wider border border-white/20">
-                      🔬 R&D Lab Support
-                    </span>
-                    <span className="bg-white/10 px-md py-1 rounded text-[11px] font-bold uppercase tracking-wider border border-white/20">
-                      ✓ PCSIR QA Approved
-                    </span>
-                    <span className="bg-white/10 px-md py-1 rounded text-[11px] font-bold uppercase tracking-wider border border-white/20">
-                      🛢️ 200L Steel Packings
-                    </span>
-                  </div>
-                </div>
-
-                <div className="shrink-0 z-10 w-full md:w-auto text-center">
-                  <button 
-                    onClick={() => handleScrollToInquiry('Healthcare', [])}
-                    className="inline-flex items-center justify-center gap-xs bg-white text-primary hover:bg-surface-bright px-2xl py-lg font-bold text-xs uppercase tracking-widest shadow-lg rounded transition-all w-full md:w-auto cursor-pointer"
-                  >
-                    Consult B2B Agent
-                    <ChevronRight className="w-4 h-4 stroke-[3]" />
-                  </button>
-                </div>
-              </section>
-            </div>
           </div>
         )}
 
@@ -917,13 +723,13 @@ export default function App() {
                     </p>
                   </div>
                   <button 
-                    onClick={() => {
+                      onClick={() => {
                       setInquiryBagOpen(false);
-                      navigateToTab('products');
+                      handleScrollToInquiry('Healthcare', []);
                     }}
                     className="bg-primary hover:bg-primary-container text-white px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
                   >
-                    View Catalog
+                    Request Spec / Inquiry
                   </button>
                 </div>
               )}
